@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import random
 import unicodedata
 
@@ -101,6 +100,15 @@ lista_palavras = ['amarelo', 'amiga', 'amor', 'ave', 'bolo', 'branco', 'cama', '
 
 while True:
     print("____JOGO DA FORCA____")
+    print("1 - 1 jogador")
+    print("2 - 2 jogadores")
+    escolha = input()
+
+    if escolha == '1':
+        multijogador = False
+    else:
+        multijogador = True
+
     print("1 - palavra aleatória")
     print("2 - escolher palavra")
     escolha = input()
@@ -126,42 +134,49 @@ letrasEncontradas = list(palavra)
 c = len(palavra)
 saida = ['_']*c
 
-# estabelecendo o critério para mais de uma palavra
+# Tratamento de espaços entre palavras
 while ' ' in letrasEncontradas:
     l = letrasEncontradas.index(' ')
     saida[l] = ' '
     letrasEncontradas[l] = '*'
 
 
-# transformando em string e printando o template vazio 
+# Transformando em string e printando o template vazio 
 r = ''.join(saida)
 print(forca[0])
 print(r)
 
+# Status de cada jogador: vidas perdidas, progresso atual e letras encontradas
 status = {'Jogador 1': [0, list(r), letrasEncontradas.copy()], 'Jogador 2': [0, list(r), letrasEncontradas.copy()]}
 
-def play(player):
-    print("Vez de %s" % player)
-    print("Progresso atual: %s" % (''.join(status[player][1])))
+# Função para mostrar turno dos jogadores, e tratar a letra inserida
+def jogar(jogador):
+    print("Vez de %s" % jogador)
+    print("Progresso atual: %s" % (''.join(status[jogador][1])))
+
     letra = input().lower()
-    chance = status[player][0]
-    status[player] = swapLetters(player, letra, chance)
+    chance = status[jogador][0]
+
+    status[jogador] = substituirLetras(jogador, letra, chance)
+
+    chance = status[jogador][0]
 
     # atualizar o template com a última tentativa
     print(forca[chance])
-    print(player)
-    r = ''.join(status[player][1])
+    print(jogador)
+    r = ''.join(status[jogador][1])
 
     if chance < 8: 
         print(r)
         print("")
 
-    if status[player][1] == list(palavra):
-        print("Parabéns, %s!" % (player))
+    if status[jogador][1] == list(palavra):
+        print("Parabéns, %s!" % (jogador))
 
-def swapLetters(player, letra, chance):
-    restante = status[player][2]
-    completo = status[player][1]
+# Função que contabiliza a letra inserida caso ela existe, ou tira uma vida do jogador caso ela não exista
+def substituirLetras(jogador, letra, chance):
+    restante = status[jogador][2]
+    completo = status[jogador][1]
     if letra in palavra:
 
         # após verificar quantas vezes a letra aparece, substituir '_' pela letra
@@ -178,7 +193,9 @@ jogadorDaVez = 'Jogador 1'
 
 # critérios para continuar o jogo
 while (status['Jogador 1'][1] != list(palavra) and status['Jogador 2'][1] != list(palavra)) and (status['Jogador 1'][0] < 8 and status['Jogador 2'][0] < 8):
-    play(jogadorDaVez)
+    jogar(jogadorDaVez)
 
-    if jogadorDaVez == 'Jogador 1': jogadorDaVez = 'Jogador 2'
-    else: jogadorDaVez = 'Jogador 1'
+    # Se o modo multijogador foi escolhido, dá a vez para o próximo jogador
+    if multijogador:    
+        if jogadorDaVez == 'Jogador 1': jogadorDaVez = 'Jogador 2'
+        else: jogadorDaVez = 'Jogador 1'
