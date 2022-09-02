@@ -1,3 +1,6 @@
+import random
+
+
 # A progressão das falhas
 forca = [
     ''' 
@@ -92,7 +95,10 @@ forca = [
     ---GAME OVER---
     '''
     ]
-palavra = input()
+lista_palavras = ['amarelo', 'amiga', 'amor', 'ave', 'bolo', 'branco', 'cama', 'caneca', 'celular', 'clube', 'copo', 'doce', 'elefante', 'escola', 'estojo', 'faca', 'foto', 'garfo', 'geleia', 'girafa', 'janela', 'limonada', 'meia', 'noite', 'ovo', 'pai', 'parque', 'passarinho', 'peixe', 'pijama', 'rato', 'umbigo']
+
+n = random.randint(0,31)
+palavra = lista_palavras[n]
 status = list(palavra)
 c = len(palavra)
 chance = 0
