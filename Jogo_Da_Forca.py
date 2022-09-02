@@ -99,6 +99,7 @@ lista_palavras = ['amarelo', 'amiga', 'amor', 'ave', 'bolo', 'branco', 'cama', '
 
 n = random.randint(0,31)
 palavra = lista_palavras[n]
+palavra = palavra.lower()
 status = list(palavra)
 c = len(palavra)
 chance = 0
@@ -115,6 +116,7 @@ print(r)
 # critérios para continuar o jogo
 while (r != palavra) and (chance < 8):
     letra = input()
+    letra = letra.lower()
     if letra in palavra:
         # após verificar quantas vezes a letra aparece, substituir '_' pela letra
         while letra in status:
