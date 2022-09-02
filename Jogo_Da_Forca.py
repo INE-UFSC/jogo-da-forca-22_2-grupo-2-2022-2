@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import random
 
 
@@ -96,9 +97,21 @@ forca = [
     '''
     ]
 lista_palavras = ['amarelo', 'amiga', 'amor', 'ave', 'bolo', 'branco', 'cama', 'caneca', 'celular', 'clube', 'copo', 'doce', 'elefante', 'escola', 'estojo', 'faca', 'foto', 'garfo', 'geleia', 'girafa', 'janela', 'limonada', 'meia', 'noite', 'ovo', 'pai', 'parque', 'passarinho', 'peixe', 'pijama', 'rato', 'umbigo']
-
-n = random.randint(0,31)
-palavra = lista_palavras[n]
+while True:
+    print("____JOGO DA FORCA____")
+    print("1 - palavra aleatória")
+    print("2 - escolher palavra")
+    escolha = input()
+    if escolha == "1":
+        n = random.randint(0,31)
+        palavra = lista_palavras[n]
+        break
+    elif escolha == "2":
+        print("escreva a palavra:")
+        palavra = input()
+        break
+    else:
+        continue
 palavra = palavra.lower()
 status = list(palavra)
 c = len(palavra)
